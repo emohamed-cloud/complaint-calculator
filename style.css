@@ -263,9 +263,9 @@ box-shadow:0 5px 16px rgba(23,58,49,.035)
 }
 
 .sla-box span{
-color:var(--muted);
-font-size:12px;
-font-weight:700
+color:var(--dark);
+font-size:13px;
+font-weight:900
 }
 
 .sla-box b{
@@ -421,9 +421,10 @@ margin:0 34px
 }
 
 #chargebackText{
-font-size:13px;
-line-height:1.8;
-color:var(--muted)
+font-size:15px;
+line-height:1.9;
+color:#000000;
+font-weight:600;
 }
 
 #chargebackText .instruction{
