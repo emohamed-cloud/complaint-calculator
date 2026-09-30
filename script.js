@@ -106,6 +106,7 @@ https://docs.google.com/forms/d/e/1FAIpQLSdAbh8Y6x6Me9RB9_U7_k-RBmmb1DTyqUhqmS_R
 
 you can find the Ticketing system sheet:
 https://docs.google.com/spreadsheets/d/11HOZUFZgt6u3G_2JP-HeXc-3ro2v-61EdbaOFz_zKtQ/edit`,
+
 "Fawry Cash IN-Not found":`Wallet number:
 ID:
 Amount:
@@ -185,8 +186,9 @@ Receiver Wallet:
 ID:
 Amount:
 Transaction Reference:
-Date and Time:`
-  "suspended by bank -Archived":`Please fill this form:
+Date and Time:`,
+
+"suspended by bank -Archived":`Please fill this form:
 https://docs.google.com/forms/d/e/1FAIpQLSe8jRCDTLeRkK3kMTINTYWthhGtE1AKRClfGHRpVN39OCDcYg/viewform
 
 you can find the Archived sheet:
@@ -271,12 +273,43 @@ CB[c].split("\n").forEach(line=>{
 
 const e=document.createElement("div");
 
+if(/^https?:\/\//i.test(line)){
+
+const a=document.createElement("a");
+
+a.href=line;
+a.target="_blank";
+a.rel="noopener noreferrer";
+
+if(line.includes("Se8jRCDTLeRkK3kMTINTYWthhGtE1AKRClfGHRpVN39OCDcYg")){
+a.textContent="Open Archived Form";
 }
+else if(line.includes("1kRdu3QqtMKq2DLXywzV9kr1HCmlv2Hs1RrfxpyXsF1A")){
+a.textContent="Open Archived Sheet";
+}
+else if(line.includes("SdAbh8Y6x6Me9RB9_U7_k-RBmmb1DTyqUhqmS_RVkTRsqH-Ig")){
+a.textContent="Open Ticketing System Form";
+}
+else if(line.includes("11HOZUFZgt6u3G_2JP-HeXc-3ro2v-61EdbaOFz_zKtQ")){
+a.textContent="Open Ticketing System Sheet";
+}
+else{
+a.textContent="Open Link";
+}
+
+e.appendChild(a);
+
+}else{
+
+e.textContent=line;
+
 if(
 /attach|assign the case|please fill this form/i.test(line)
 ){
 
 e.className="instruction";
+
+}
 
 }
 
