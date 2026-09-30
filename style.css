@@ -104,9 +104,9 @@ border-radius:18px;
 display:flex;
 align-items:center;
 justify-content:center;
-background:linear-gradient(145deg,#c8f5e4,#aee9d5);
+background:#138f6b;
 border:1px solid rgba(19,143,107,.10);
-box-shadow:0 10px 24px rgba(19,143,107,.10);
+box-shadow:0 10px 24px rgba(19,143,107,.18);
 overflow:hidden
 }
 
