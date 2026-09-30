@@ -13,7 +13,7 @@ const S={
 "send p2p off us issue(Mezza reference)":[2,"business"],
 "Wallet Recycling":[2,"business"],
 "Wallet Deactivate-Ticketing system Form":[2,"business"],
-
+"suspended by bank -Archived":[2,"business"],
 "Send p2p-Pending Advise":[3,"business"],
 "Receive p2p-Pending Advise":[3,"business"],
 "ATM Cashout Reversal-Created":[3,"business"],
@@ -102,8 +102,10 @@ Branch Name:
 Assign the case to retail team with status Escalated and choose the branch name.`,
 
 "Wallet Deactivate-Ticketing system Form":`Please fill this form:
-https://docs.google.com/forms/d/e/1FAIpQLSdAbh8Y6x6Me9RB9_U7_k-RBmmb1DTyqUhqmS_RVkTRsqH-Ig/viewform?pli=1&pli=1&fbzx=-8291164158586578063`,
+https://docs.google.com/forms/d/e/1FAIpQLSdAbh8Y6x6Me9RB9_U7_k-RBmmb1DTyqUhqmS_RVkTRsqH-Ig/viewform?pli=1&pli=1&fbzx=-8291164158586578063
 
+you can find the Ticketing system sheet:
+https://docs.google.com/spreadsheets/d/11HOZUFZgt6u3G_2JP-HeXc-3ro2v-61EdbaOFz_zKtQ/edit`,
 "Fawry Cash IN-Not found":`Wallet number:
 ID:
 Amount:
@@ -184,6 +186,11 @@ ID:
 Amount:
 Transaction Reference:
 Date and Time:`
+  "suspended by bank -Archived":`Please fill this form:
+https://docs.google.com/forms/d/e/1FAIpQLSe8jRCDTLeRkK3kMTINTYWthhGtE1AKRClfGHRpVN39OCDcYg/viewform
+
+you can find the Archived sheet:
+https://docs.google.com/spreadsheets/d/1kRdu3QqtMKq2DLXywzV9kr1HCmlv2Hs1RrfxpyXsF1A/edit?gid=1024723069#gid=1024723069`,
 };
 
 
@@ -264,23 +271,7 @@ CB[c].split("\n").forEach(line=>{
 
 const e=document.createElement("div");
 
-if(/^https?:\/\//i.test(line)){
-
-const a=document.createElement("a");
-
-a.href=line;
-a.target="_blank";
-a.rel="noopener noreferrer";
-a.textContent="Open Ticketing System Form";
-
-e.appendChild(a);
-
-}else{
-
-e.textContent=line;
-
 }
-
 if(
 /attach|assign the case|please fill this form/i.test(line)
 ){
