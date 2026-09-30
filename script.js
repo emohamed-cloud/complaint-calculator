@@ -329,8 +329,6 @@ selected=c;
 
 search.value=c;
 
-chosen.textContent=c;
-
 list.classList.add("hidden");
 
 showChargeback(c);
