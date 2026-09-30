@@ -241,8 +241,6 @@ let cb=document.getElementById('chargeback');
 
 let ct=document.getElementById('chargebackText');
 
-let empty=document.getElementById('chargebackEmpty');
-
 let cfg=S[c];
 
 
@@ -307,13 +305,9 @@ ct.appendChild(e);
 
 cb.classList.remove('hidden');
 
-empty.classList.add('hidden');
-
 }else{
 
 cb.classList.add('hidden');
-
-empty.classList.remove('hidden');
 
 }
 
@@ -375,8 +369,6 @@ chosen.textContent='';
 slaBox.classList.add('hidden');
 
 document.getElementById('chargeback').classList.add('hidden');
-
-document.getElementById('chargebackEmpty').classList.remove('hidden');
 
 show(search.value);
 
