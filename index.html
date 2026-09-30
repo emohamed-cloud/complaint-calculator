@@ -1,1 +1,468 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Axis Pay - Complaint Calculator</title><link rel="stylesheet" href="style.css"></head><body><main class="app"><section class="card"><header><div class="brand"><div class="badge"><span>AXIS</span></div><div><h1>Complaint Calculator</h1><p>Calculate complaint SLA, due date and remaining time</p></div></div></header><section class="form"><label>Complaint Date</label><input type="date" id="date"><label>Category</label><div class="search"><input id="search" autocomplete="off" placeholder="Search or select category..."><div id="list" class="list hidden"></div></div><div id="chosen"></div><button id="calc">CALCULATE</button><div id="error" class="error hidden"></div></section><section id="results" class="results hidden"><div class="grid"><div><span id="dayLabel">Current Business Day</span><b id="current">-</b></div><div><span>SLA Due Date</span><b id="due">-</b></div><div><span>Remaining Time</span><b id="remain">-</b></div><div><span>Complaint Date</span><b id="complaint">-</b></div><div><span>Today</span><b id="today">-</b></div><div><span>SLA</span><b id="sla">-</b></div></div><div id="status" class="status"></div><div id="holiday" class="info hidden"><h3>Holidays During SLA Period</h3><ul id="holidays"></ul></div><div id="chargeback" class="info hidden"><h3>Charge Back</h3><div id="chargebackText"></div><button id="copyChargeback" type="button">Copy Charge Back</button></div></section><footer>Designed with care by Esraa</footer></section></main><script src="script.js"></script></body></html>
+* {
+  box-sizing: border-box;
+  }
+
+body {
+margin: 0;
+min-height: 100vh;
+
+font-family:
+Inter,
+Arial,
+Tahoma,
+sans-serif;
+
+background:
+radial-gradient(
+circle at 15% 15%,
+rgba(155, 216, 195, 0.65),
+transparent 32%
+),
+radial-gradient(
+circle at 85% 20%,
+rgba(94, 196, 174, 0.45),
+transparent 30%
+),
+radial-gradient(
+circle at 80% 85%,
+rgba(184, 231, 215, 0.65),
+transparent 35%
+),
+linear-gradient(
+135deg,
+#e9f8f2,
+#cceee2,
+#eefbf7
+);
+
+color: #193c35;
+}
+
+/* Main */
+
+.app {
+min-height: 100vh;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+padding: 40px 20px;
+}
+
+/* Main Card */
+
+.card {
+width: min(760px, 100%);
+
+background: rgba(255, 255, 255, 0.92);
+
+border-radius: 28px;
+
+padding: 34px;
+
+box-shadow:
+0 25px 70px rgba(32, 105, 88, 0.18),
+0 8px 25px rgba(32, 105, 88, 0.10);
+
+backdrop-filter: blur(14px);
+
+border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+/* Header */
+
+.header {
+position: relative;
+
+text-align: center;
+
+padding-bottom: 30px;
+
+border-bottom: 1px solid #dceee8;
+}
+
+/* AxisPay Logo */
+
+.brand-logo {
+display: inline-flex;
+
+align-items: center;
+justify-content: center;
+
+min-width: 150px;
+height: 52px;
+
+padding: 0 24px;
+
+border-radius: 16px;
+
+background:
+linear-gradient(
+135deg,
+#9bd8c3,
+#72c8ad
+);
+
+color: #ffffff;
+
+font-size: 21px;
+font-weight: 800;
+
+letter-spacing: 0.5px;
+
+box-shadow:
+0 8px 20px rgba(78, 170, 143, 0.22);
+}
+
+/* Center Title */
+
+.header-title {
+margin-top: 22px;
+}
+
+.header-title h1 {
+margin: 0;
+
+font-size: 30px;
+
+font-weight: 750;
+
+color: #183f36;
+}
+
+.header-title p {
+margin: 9px 0 0;
+
+font-size: 14px;
+
+color: #719188;
+}
+
+/* Form */
+
+.form {
+padding-top: 30px;
+}
+
+label {
+display: block;
+
+margin-bottom: 8px;
+margin-top: 18px;
+
+font-size: 14px;
+
+font-weight: 650;
+
+color: #315d53;
+}
+
+/* Inputs */
+
+input {
+width: 100%;
+
+height: 50px;
+
+border: 1px solid #d5e9e2;
+
+border-radius: 14px;
+
+background: #f9fdfb;
+
+padding: 0 15px;
+
+font-size: 14px;
+
+color: #234b42;
+
+outline: none;
+
+transition:
+border-color 0.2s,
+box-shadow 0.2s,
+background 0.2s;
+}
+
+input:focus {
+background: #ffffff;
+
+border-color: #83ccb5;
+
+box-shadow:
+0 0 0 4px rgba(131, 204, 181, 0.15);
+}
+
+/* Search */
+
+.search {
+position: relative;
+}
+
+.list {
+position: absolute;
+
+z-index: 20;
+
+top: calc(100% + 6px);
+
+left: 0;
+right: 0;
+
+max-height: 240px;
+
+overflow-y: auto;
+
+background: #ffffff;
+
+border: 1px solid #dceee8;
+
+border-radius: 14px;
+
+box-shadow:
+0 15px 35px rgba(35, 100, 84, 0.15);
+}
+
+.hidden {
+display: none;
+}
+
+/* Calculate */
+
+#calc {
+width: 100%;
+
+height: 54px;
+
+margin-top: 28px;
+
+border: none;
+
+border-radius: 15px;
+
+background:
+linear-gradient(
+135deg,
+#8fd3bd,
+#69bea4
+);
+
+color: #ffffff;
+
+font-size: 15px;
+
+font-weight: 750;
+
+letter-spacing: 0.4px;
+
+cursor: pointer;
+
+box-shadow:
+0 10px 22px rgba(83, 175, 146, 0.22);
+
+transition:
+transform 0.2s,
+box-shadow 0.2s;
+}
+
+#calc:hover {
+transform: translateY(-1px);
+
+box-shadow:
+0 14px 28px rgba(83, 175, 146, 0.28);
+}
+
+/* Results */
+
+.results {
+margin-top: 30px;
+
+padding-top: 28px;
+
+border-top: 1px solid #dceee8;
+}
+
+/* Result Grid */
+
+.grid {
+display: grid;
+
+grid-template-columns:
+repeat(2, 1fr);
+
+gap: 14px;
+}
+
+.grid > div {
+min-height: 92px;
+
+padding: 18px;
+
+border-radius: 17px;
+
+background:
+linear-gradient(
+145deg,
+#f6fcfa,
+#edf8f4
+);
+
+border: 1px solid #dceee8;
+}
+
+.grid span {
+display: block;
+
+font-size: 12px;
+
+color: #78968e;
+
+margin-bottom: 9px;
+}
+
+.grid b {
+display: block;
+
+font-size: 17px;
+
+color: #214d42;
+}
+
+/* Status */
+
+.status {
+margin-top: 18px;
+
+padding: 15px 18px;
+
+border-radius: 14px;
+
+background: #edf8f4;
+
+color: #37675b;
+
+font-size: 14px;
+}
+
+/* Information Boxes */
+
+.info {
+margin-top: 18px;
+
+padding: 20px;
+
+border-radius: 17px;
+
+background:
+linear-gradient(
+145deg,
+#f8fdfb,
+#edf8f4
+);
+
+border: 1px solid #dceee8;
+}
+
+.info h3 {
+margin: 0 0 12px;
+
+font-size: 15px;
+
+color: #28564b;
+}
+
+.info ul {
+margin: 0;
+
+padding-left: 20px;
+
+color: #5d7b73;
+
+font-size: 13px;
+}
+
+/* Charge Back Button */
+
+#copyChargeback {
+margin-top: 15px;
+
+border: none;
+
+border-radius: 11px;
+
+padding: 10px 16px;
+
+background: #e0f3ec;
+
+color: #31715f;
+
+font-weight: 650;
+
+cursor: pointer;
+}
+
+/* Error */
+
+.error {
+margin-top: 14px;
+
+padding: 12px 15px;
+
+border-radius: 12px;
+
+background: #fff1f1;
+
+color: #a04b4b;
+
+font-size: 13px;
+}
+
+/* Footer */
+
+footer {
+margin-top: 28px;
+
+text-align: center;
+
+font-size: 11px;
+
+color: #91aaa3;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+.app {
+padding: 20px 12px;
+}
+
+.card {
+padding: 24px 18px;
+
+```
+border-radius: 22px;
+```
+
+}
+
+.header-title h1 {
+font-size: 25px;
+}
+
+.grid {
+grid-template-columns: 1fr;
+}
+
+.brand-logo {
+min-width: 135px;
+
+```
+height: 48px;
+
+font-size: 19px;
+```
+
+}
+}
