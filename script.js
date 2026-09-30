@@ -94,7 +94,7 @@ Amount:
 Date and time:`,
 
 "Wallet Replacment":`Old Wallet:
-New Wallet :
+New Wallet:
 ID:
 Amount:
 Branch Name:
@@ -162,7 +162,7 @@ Please attach a photo of the transaction from portal.`,
 
 "P2M-posted":`Wallet Number:
 ID:
-Amount :
+Amount:
 Transaction Reference:
 Date and Time:
 Merchant:
@@ -171,7 +171,7 @@ Please attach a photo of the transaction from portal`,
 
 "P2M 2D":`Wallet Number:
 ID:
-Amount :
+Amount:
 Transaction Reference:
 Date and Time:
 Merchant:
@@ -192,7 +192,6 @@ const cats=Object.keys(S);
 const date=document.getElementById("date");
 const search=document.getElementById("search");
 const list=document.getElementById("list");
-const chosen=document.getElementById("chosen");
 
 const slaBox=document.getElementById("slaBox");
 const categorySla=document.getElementById("categorySla");
@@ -229,8 +228,10 @@ function showChargeback(c){
 const cfg=S[c];
 
 if(!cfg){
+
 slaBox.classList.add("hidden");
 chargeback.classList.add("hidden");
+
 return;
 }
 
@@ -303,17 +304,18 @@ chargeback.classList.add("hidden");
 }
 
 
-/* SHOW CATEGORIES */
+/* SHOW / FILTER CATEGORIES */
 
 function show(q=""){
 
-const x=q.trim().toLowerCase();
+const query=q.trim().toLowerCase();
 
 list.innerHTML="";
 
-const filtered=cats.filter(c =>
-c.toLowerCase().includes(x)
+const filtered=cats.filter(c=>
+c.toLowerCase().includes(query)
 );
+
 
 filtered.forEach(c=>{
 
@@ -322,6 +324,7 @@ const e=document.createElement("div");
 e.className="option";
 
 e.textContent=c;
+
 
 e.onmousedown=event=>{
 
@@ -337,11 +340,13 @@ showChargeback(c);
 
 };
 
+
 list.appendChild(e);
 
 });
 
-if(filtered.length){
+
+if(filtered.length>0){
 
 list.classList.remove("hidden");
 
@@ -354,7 +359,7 @@ list.classList.add("hidden");
 }
 
 
-/* SEARCH */
+/* OPEN CATEGORY LIST */
 
 search.addEventListener("focus",()=>{
 
@@ -362,6 +367,8 @@ show(search.value);
 
 });
 
+
+/* LIVE SEARCH */
 
 search.addEventListener("input",()=>{
 
@@ -376,68 +383,7 @@ show(search.value);
 });
 
 
-document.addEventListener("click",event=>{
-
-if(!event.target.closest(".search")){
-
-list.classList.add("hidden");
-
-}
-
-});
-
-
-/* SEARCH */
-
-search.addEventListener("focus",()=>{
-
-show(search.value);
-
-});
-
-
-search.addEventListener("input",()=>{
-
-selected="";
-
-showChargeback("");
-
-show(search.value);
-
-});
-
-};
-
-list.appendChild(e);
-
-});
-
-list.classList.remove("hidden");
-
-}
-
-
-/* SEARCH */
-
-search.addEventListener("focus",()=>{
-show(search.value);
-});
-
-
-search.addEventListener("input",()=>{
-
-selected="";
-
-chosen.textContent="";
-
-slaBox.classList.add("hidden");
-
-chargeback.classList.add("hidden");
-
-show(search.value);
-
-});
-
+/* CLOSE LIST */
 
 document.addEventListener("click",event=>{
 
@@ -498,7 +444,7 @@ while(d<end){
 
 d.setDate(d.getDate()+1);
 
-if(d<=end && work(d)){
+if(d<=end&&work(d)){
 
 count++;
 
@@ -539,8 +485,7 @@ error.classList.add("hidden");
 
 if(!date.value){
 
-error.textContent=
-"Please select the complaint date.";
+error.textContent="Please select the complaint date.";
 
 error.classList.remove("hidden");
 
@@ -550,9 +495,8 @@ return;
 
 
 const category=
-selected ||
+selected||
 search.value.trim();
-
 
 const cfg=S[category];
 
@@ -569,8 +513,7 @@ return;
 }
 
 
-const complaintDate=
-parse(date.value);
+const complaintDate=parse(date.value);
 
 
 let today=new Date();
@@ -674,8 +617,7 @@ document.getElementById("sla").textContent=
 
 /* STATUS */
 
-const status=
-document.getElementById("status");
+const status=document.getElementById("status");
 
 status.className=
 "status "+
@@ -698,11 +640,9 @@ today<complaintDate
 
 /* HOLIDAYS */
 
-const holidayBox=
-document.getElementById("holiday");
+const holidayBox=document.getElementById("holiday");
 
-const holidayList=
-document.getElementById("holidays");
+const holidayList=document.getElementById("holidays");
 
 holidayList.innerHTML="";
 
@@ -736,7 +676,7 @@ d.setDate(d.getDate()+1);
 
 holidayBox.classList.toggle(
 "hidden",
-cfg[1]!=="business" ||
+cfg[1]!=="business"||
 !holidayList.children.length
 );
 
@@ -771,7 +711,7 @@ document.getElementById("copyChargeback")
 .addEventListener("click",async()=>{
 
 const category=
-selected ||
+selected||
 search.value.trim();
 
 const text=CB[category];
@@ -788,8 +728,7 @@ await navigator.clipboard.writeText(text);
 
 }catch(error){
 
-const textarea=
-document.createElement("textarea");
+const textarea=document.createElement("textarea");
 
 textarea.value=text;
 
