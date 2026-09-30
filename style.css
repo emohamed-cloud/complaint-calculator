@@ -28,7 +28,7 @@ display:grid;
 place-items:center;
 padding:34px 22px;
 position:relative;
-overflow:hidden
+overflow:visible
 }
 
 .app:before,
@@ -148,6 +148,7 @@ line-height:1.5
 display:grid;
 grid-template-columns:1fr 1fr;
 align-items:stretch
+overflow:visible
 }
 
 
