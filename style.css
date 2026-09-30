@@ -423,8 +423,8 @@ margin:0 34px
 #chargebackText{
 font-size:15px;
 line-height:1.9;
-color:#000000;
-font-weight:600;
+color:var(--muted)
+font-weight:400;
 }
 
 #chargebackText .instruction{
