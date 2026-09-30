@@ -307,13 +307,15 @@ chargeback.classList.add("hidden");
 
 function show(q=""){
 
-const x=q.toLowerCase();
+const x=q.trim().toLowerCase();
 
 list.innerHTML="";
 
-cats
-.filter(c=>c.toLowerCase().includes(x))
-.forEach(c=>{
+const filtered=cats.filter(c =>
+c.toLowerCase().includes(x)
+);
+
+filtered.forEach(c=>{
 
 const e=document.createElement("div");
 
@@ -332,6 +334,77 @@ search.value=c;
 list.classList.add("hidden");
 
 showChargeback(c);
+
+};
+
+list.appendChild(e);
+
+});
+
+if(filtered.length){
+
+list.classList.remove("hidden");
+
+}else{
+
+list.classList.add("hidden");
+
+}
+
+}
+
+
+/* SEARCH */
+
+search.addEventListener("focus",()=>{
+
+show(search.value);
+
+});
+
+
+search.addEventListener("input",()=>{
+
+selected="";
+
+slaBox.classList.add("hidden");
+
+chargeback.classList.add("hidden");
+
+show(search.value);
+
+});
+
+
+document.addEventListener("click",event=>{
+
+if(!event.target.closest(".search")){
+
+list.classList.add("hidden");
+
+}
+
+});
+
+
+/* SEARCH */
+
+search.addEventListener("focus",()=>{
+
+show(search.value);
+
+});
+
+
+search.addEventListener("input",()=>{
+
+selected="";
+
+showChargeback("");
+
+show(search.value);
+
+});
 
 };
 
