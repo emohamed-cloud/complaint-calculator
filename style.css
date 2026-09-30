@@ -221,12 +221,13 @@ position:relative
 
 .list{
 position:absolute;
-z-index:10;
+z-index:100;
 left:0;
 right:0;
 top:52px;
-max-height:270px;
-overflow:auto;
+max-height:360px;
+overflow-y:auto;
+overflow-x:hidden;
 background:#fff;
 border:1px solid var(--line);
 border-radius:15px;
@@ -239,7 +240,11 @@ padding:12px 13px;
 border-radius:10px;
 cursor:pointer;
 font-size:13px;
-line-height:1.35
+line-height:1.5;
+min-height:40px;
+white-space:normal;
+word-break:normal;
+overflow:visible
 }
 
 .option:hover{
