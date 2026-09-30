@@ -105,18 +105,56 @@ const pad=n=>String(n).padStart(2,'0'),key=d=>`${d.getFullYear()}-${pad(d.getMon
 function showChargeback(c){
 let cb=document.getElementById('chargeback'),ct=document.getElementById('chargebackText');
 ct.innerHTML='';
-if(!CB[c]){cb.classList.add('hidden');return}
-CB[c].split('\n').forEach(line=>{let e=document.createElement('div');if(/^https?:\/\//i.test(line)){let a=document.createElement('a');a.href=line;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Open Ticketing System Form';e.appendChild(a)}else e.textContent=line;if(/attach|assign the case|please fill this form/i.test(line))e.className='instruction';ct.appendChild(e)});
+if(CB[c]){
+CB[c].split('\n').forEach(line=>{
+let e=document.createElement('div');
+if(/^https?:\/\//i.test(line)){
+let a=document.createElement('a');
+a.href=line;
+a.target='_blank';
+a.rel='noopener noreferrer';
+a.textContent='Open Ticketing System Form';
+e.appendChild(a);
+}else e.textContent=line;
+if(/attach|assign the case|please fill this form/i.test(line))e.className='instruction';
+ct.appendChild(e);
+});
 cb.classList.remove('hidden');
+}else cb.classList.add('hidden');
 }
 
-function show(q=''){let x=q.toLowerCase();list.innerHTML='';cats.filter(c=>c.toLowerCase().includes(x)).forEach(c=>{let e=document.createElement('div');e.className='option';e.textContent=c;e.onmousedown=ev=>{ev.preventDefault();selected=c;search.value=c;chosen.textContent=`${S[c][0]} ${S[c][1]==='business'?'Business':'Calendar'} Day${S[c][0]===1?'':'s'}`;list.classList.add('hidden');showChargeback(c)};list.appendChild(e)});list.classList.remove('hidden')}
+function show(q=''){
+let x=q.toLowerCase();
+list.innerHTML='';
+cats.filter(c=>c.toLowerCase().includes(x)).forEach(c=>{
+let e=document.createElement('div');
+e.className='option';
+e.textContent=c;
+e.onmousedown=ev=>{
+ev.preventDefault();
+selected=c;
+search.value=c;
+chosen.textContent=`${S[c][0]} ${S[c][1]==='business'?'Business':'Calendar'} Day${S[c][0]===1?'':'s'}`;
+list.classList.add('hidden');
+showChargeback(c);
+};
+list.appendChild(e);
+});
+list.classList.remove('hidden');
+}
 
 search.onfocus=()=>show(search.value);
 
-search.oninput=()=>{selected='';chosen.textContent='';document.getElementById('chargeback').classList.add('hidden');show(search.value)};
+search.oninput=()=>{
+selected='';
+chosen.textContent='';
+document.getElementById('chargeback').classList.add('hidden');
+show(search.value);
+};
 
-document.onclick=e=>{if(!e.target.closest('.search'))list.classList.add('hidden')};
+document.onclick=e=>{
+if(!e.target.closest('.search'))list.classList.add('hidden')
+};
 
 function addBiz(d,n){d=new Date(d);while(n){d.setDate(d.getDate()+1);if(work(d))n--}return d}
 
@@ -126,10 +164,83 @@ function countBiz(a,b){let n=0,d=new Date(a);while(d<b){d.setDate(d.getDate()+1)
 
 function countCal(a,b){return b<=a?0:Math.floor((b-a)/86400000)}
 
-function calculate(){let err=document.getElementById('error');err.classList.add('hidden');let cd=parse(date.value),c=selected||search.value.trim(),cfg=S[c];if(!date.value){err.textContent='Please select the complaint date.';err.classList.remove('hidden');return}if(!cfg){err.textContent='Please select a valid category from the list.';err.classList.remove('hidden');return}let today=new Date();today=new Date(today.getFullYear(),today.getMonth(),today.getDate());let due=cfg[1]==='business'?addBiz(cd,cfg[0]):addCal(cd,cfg[0]);let cur=cfg[1]==='business'?countBiz(cd,today):countCal(cd,today);if(today<cd)cur=0;let rem=today<cd?cfg[0]:today>due?0:(cfg[1]==='business'?countBiz(today,due):countCal(today,due));document.getElementById('dayLabel').textContent=cfg[1]==='business'?'Current Business Day':'Current Calendar Day';document.getElementById('current').textContent=`Day ${cur} of ${cfg[0]} ${cfg[1]==='business'?'Business':'Calendar'} Day${cfg[0]===1?'':'s'}`;document.getElementById('due').textContent=fmt(due);document.getElementById('remain').textContent=`${rem} ${cfg[1]==='business'?'Business':'Calendar'} Day${rem===1?'':'s'}`;document.getElementById('complaint').textContent=fmt(cd);document.getElementById('today').textContent=fmt(today);document.getElementById('sla').textContent=`${cfg[0]} ${cfg[1]==='business'?'Business':'Calendar'} Days`;let st=document.getElementById('status');st.className='status '+(today<cd?'future':today>due?'exceeded':'within');st.textContent=today<cd?'Complaint date is in the future':today>due?'SLA Exceeded':'Within SLA';let box=document.getElementById('holiday'),ul=document.getElementById('holidays');ul.innerHTML='';let x=new Date(cd);if(cfg[1]==='business'){while(x<=due){if(H[key(x)]){let li=document.createElement('li');li.textContent=`${fmt(x)} — ${H[key(x)]}`;ul.appendChild(li)}x.setDate(x.getDate()+1)}}box.classList.toggle('hidden',cfg[1]!=='business'||!ul.children.length);showChargeback(c);document.getElementById('results').classList.remove('hidden')}
+function calculate(){
+let err=document.getElementById('error');
+err.classList.add('hidden');
+let cd=parse(date.value),c=selected||search.value.trim(),cfg=S[c];
+
+if(!date.value){
+err.textContent='Please select the complaint date.';
+err.classList.remove('hidden');
+return
+}
+
+if(!cfg){
+err.textContent='Please select a valid category from the list.';
+err.classList.remove('hidden');
+return
+}
+
+let today=new Date();
+today=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+
+let due=cfg[1]==='business'?addBiz(cd,cfg[0]):addCal(cd,cfg[0]);
+
+let cur=cfg[1]==='business'?countBiz(cd,today):countCal(cd,today);
+
+if(today<cd)cur=0;
+
+let rem=today<cd?cfg[0]:today>due?0:(cfg[1]==='business'?countBiz(today,due):countCal(today,due));
+
+document.getElementById('dayLabel').textContent=cfg[1]==='business'?'Current Business Day':'Current Calendar Day';
+
+document.getElementById('current').textContent=`Day ${cur} of ${cfg[0]} ${cfg[1]==='business'?'Business':'Calendar'} Day${cfg[0]===1?'':'s'}`;
+
+document.getElementById('due').textContent=fmt(due);
+
+document.getElementById('remain').textContent=`${rem} ${cfg[1]==='business'?'Business':'Calendar'} Day${rem===1?'':'s'}`;
+
+document.getElementById('complaint').textContent=fmt(cd);
+
+document.getElementById('today').textContent=fmt(today);
+
+document.getElementById('sla').textContent=`${cfg[0]} ${cfg[1]==='business'?'Business':'Calendar'} Days`;
+
+let st=document.getElementById('status');
+
+st.className='status '+(today<cd?'future':today>due?'exceeded':'within');
+
+st.textContent=today<cd?'Complaint date is in the future':today>due?'SLA Exceeded':'Within SLA';
+
+let box=document.getElementById('holiday'),ul=document.getElementById('holidays');
+
+ul.innerHTML='';
+
+let x=new Date(cd);
+
+if(cfg[1]==='business'){
+while(x<=due){
+if(H[key(x)]){
+let li=document.createElement('li');
+li.textContent=`${fmt(x)} — ${H[key(x)]}`;
+ul.appendChild(li)
+}
+x.setDate(x.getDate()+1)
+}
+}
+
+box.classList.toggle('hidden',cfg[1]!=='business'||!ul.children.length);
+
+showChargeback(c);
+
+document.getElementById('results').classList.remove('hidden')
+}
 
 date.value=key(new Date());
 
 document.getElementById('calc').onclick=calculate;
 
-document.getElementById('copyChargeback').onclick=async()=>{let c=CB[selected||search.value.trim()];if(c)await navigator.clipboard.writeText(c)};
+document.getElementById('copyChargeback').onclick=async()=>{
+let c=CB[selected||search.value.trim()];
+if(c)await navigator.clipboard.writeText(c)
+};
