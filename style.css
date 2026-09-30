@@ -5,7 +5,7 @@ body{margin:0;min-height:100vh;font-family:Arial,Tahoma,sans-serif;color:var(--d
 .app:before,.app:after{content:"";position:absolute;border-radius:50%;pointer-events:none;filter:blur(2px)}
 .app:before{width:280px;height:280px;background:rgba(99,230,190,.10);top:-110px;right:-80px}.app:after{width:220px;height:220px;background:rgba(99,230,190,.08);bottom:-90px;left:-70px}
 .card{width:min(900px,100%);background:rgba(255,255,255,.94);border:1px solid rgba(220,238,231,.95);border-radius:30px;box-shadow:var(--shadow);overflow:hidden;position:relative;backdrop-filter:blur(8px)}
-.card:after{content:'AXIS';position:absolute;right:28px;bottom:62px;font-size:92px;font-weight:900;letter-spacing:5px;color:rgba(19,143,107,.035);pointer-events:none}
+.card:after{content:'AxisPay';position:absolute;right:28px;bottom:62px;font-size:92px;font-weight:900;letter-spacing:5px;color:rgba(19,143,107,.035);pointer-events:none}
 .brand{display:flex;gap:18px;align-items:center;padding:30px 34px;background:linear-gradient(135deg,#effff9,#f9fffd);border-bottom:1px solid var(--line);position:relative}
 .brand:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,transparent,var(--mint),transparent);opacity:.65}
 .badge{width:72px;height:72px;border-radius:20px;display:grid;place-items:center;background:linear-gradient(145deg,#c9f8e8,#a9efd8);border:1px solid rgba(19,143,107,.12);box-shadow:0 10px 24px rgba(19,143,107,.10);transform:rotate(-2deg);flex:none}
