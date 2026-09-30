@@ -1,1 +1,194 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Axis Pay - Complaint Calculator</title><link rel="stylesheet" href="style.css"></head><body><main class="app"><section class="card"><header><div class="brand"><div class="badge"><img src="axis-logo-cropped.png" alt="Axis"></div><div><h1>Complaint Calculator</h1><p>Calculate complaint SLA, due date and remaining time</p></div></div></header><section class="form"><label>Complaint Date</label><input type="date" id="date"><label>Category</label><div class="search"><input id="search" autocomplete="off" placeholder="Search or select category..."><div id="list" class="list hidden"></div></div><div id="chosen"></div><button id="calc">CALCULATE</button><div id="error" class="error hidden"></div></section><section id="results" class="results hidden"><div class="grid"><div><span id="dayLabel">Current Business Day</span><b id="current">-</b></div><div><span>SLA Due Date</span><b id="due">-</b></div><div><span>Remaining Time</span><b id="remain">-</b></div><div><span>Complaint Date</span><b id="complaint">-</b></div><div><span>Today</span><b id="today">-</b></div><div><span>SLA</span><b id="sla">-</b></div></div><div id="status" class="status"></div><div id="holiday" class="info hidden"><h3>Holidays During SLA Period</h3><ul id="holidays"></ul></div><div id="chargeback" class="info hidden"><h3>Charge Back</h3><div id="chargebackText"></div><button id="copyChargeback" type="button">Copy Charge Back</button></div></section><footer>Designed with care by Esraa</footer></section></main><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint SLA Calculator - Axis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Bar -->
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="axis-logo-cropped.png" alt="axis logo" class="logo-img">
+            <span class="logo-tagline">Easy, Instant & safe payments for everyone</span>
+        </div>
+        <div class="header-note">
+            With you always,<br><strong>Esraa</strong>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Banner Title Card -->
+        <div class="banner-card">
+            <div class="banner-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00b997" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><circle cx="12" cy="15" r="2"></circle></svg>
+            </div>
+            <div class="banner-text">
+                <h1>Complaint SLA Calculator</h1>
+                <p>Calculate complaint SLA, due date and remaining business days</p>
+            </div>
+        </div>
+
+        <!-- Grid Section 1: Inputs & Results -->
+        <div class="grid-section">
+            
+            <!-- Form Card -->
+            <div class="card form-card">
+                <div class="step-item">
+                    <div class="step-header">
+                        <span class="step-number">1</span>
+                        <label for="complaintCategory">Select Complaint Category</label>
+                    </div>
+                    <select id="complaintCategory" class="custom-select">
+                        <option value="" disabled selected>Choose a category</option>
+                    </select>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-header">
+                        <span class="step-number">2</span>
+                        <label for="complaintDate">Complaint Date</label>
+                    </div>
+                    <div class="input-with-icon">
+                        <input type="date" id="complaintDate">
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-header">
+                        <span class="step-number">3</span>
+                        <label>Check Holidays (Optional)</label>
+                    </div>
+                    <div class="info-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#008080" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span>Select this option to include official holidays in the calculation (only if the SLA is in business days).</span>
+                    </div>
+                    <div class="toggle-wrapper">
+                        <label class="switch">
+                            <input type="checkbox" id="includeHolidays">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="toggle-label">Include Official Holidays</span>
+                    </div>
+                </div>
+
+                <button class="btn-primary" id="calculateBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="18"></line><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
+                    Calculate SLA
+                </button>
+            </div>
+
+            <!-- Calculation Result Card -->
+            <div class="card result-card-wrapper">
+                <div class="card-title">
+                    <span class="card-title-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b997" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    </span>
+                    <h2>Calculation Result</h2>
+                </div>
+
+                <div class="results-grid">
+                    <div class="res-box">
+                        <span class="res-label">Current Business Day</span>
+                        <span class="res-value" id="currentBusinessDay">Day 1 of 2 Business Days</span>
+                    </div>
+                    <div class="res-box">
+                        <span class="res-label">SLA Due Date</span>
+                        <span class="res-value" id="slaDueDate">02 Oct 2025</span>
+                    </div>
+                    <div class="res-box">
+                        <span class="res-label">Remaining Time</span>
+                        <span class="res-value" id="remainingTime">1 Business Day</span>
+                    </div>
+                    <div class="res-box">
+                        <span class="res-label">Complaint Date</span>
+                        <span class="res-value" id="complaintDateResult">30 Sep 2025</span>
+                    </div>
+                </div>
+
+                <div class="holidays-sub-section">
+                    <h3>Official Holidays (if applicable)</h3>
+                    <div class="status-box">
+                        <div class="status-icon">✓</div>
+                        <div class="status-text">
+                            <strong>No official holidays within the SLA period.</strong>
+                            <p>Holidays will only be shown for Business Days categories and if they occur within the SLA period.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="watermark">AXIS</div>
+            </div>
+
+        </div>
+
+        <!-- Grid Section 2: Holidays & Templates -->
+        <div class="grid-section">
+            
+            <!-- Official Holidays List -->
+            <div class="card">
+                <div class="card-title space-between">
+                    <div class="title-left">
+                        <span class="card-title-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b997" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+                        </span>
+                        <h2>Official Holidays 2026</h2>
+                    </div>
+                    <a href="#" class="view-all-link">View All</a>
+                </div>
+
+                <div class="info-box mb-15">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#008080" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <span>Holidays will only appear in the result if the SLA is in Business Days and the selected date falls within the SLA period.</span>
+                </div>
+
+                <ul class="holidays-list" id="holidaysList">
+                    <li><span>1 Jan 2026</span> <strong>New Year's Day</strong></li>
+                    <li><span>7 Jan 2026</span> <strong>Coptic Christmas</strong></li>
+                    <li><span>25 Jan 2026</span> <strong>Police Day</strong></li>
+                    <li><span>19 Apr 2026</span> <strong>Easter Monday</strong></li>
+                    <li><span>1 May 2026</span> <strong>Labor Day</strong></li>
+                </ul>
+            </div>
+
+            <!-- Charge Back Templates -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="card-title-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b997" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                    </span>
+                    <h2>Charge Back Templates</h2>
+                </div>
+                <p class="section-desc">Copy the required charge back template for the selected category.</p>
+
+                <select id="templateCategory" class="custom-select mb-15">
+                    <option value="" disabled selected>Select a category to view charge back template</option>
+                </select>
+
+                <div class="template-display-box" id="templateText">
+                    The charge back template will appear here after selecting a category.
+                </div>
+
+                <button class="btn-secondary" id="copyTemplateBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy Charge Back
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div>Axis Pay | Complaint SLA Calculator</div>
+        <div class="powered-by">Powered by <span class="brand-green">● axis</span></div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
