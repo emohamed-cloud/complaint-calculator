@@ -439,16 +439,20 @@ min-width:155px;
 height:42px;
 padding:0 16px;
 border-radius:11px;
-background:#baf3df!important;
+background:linear-gradient(135deg,#8aefd0,#65dbb7)!important;
 color:#ffffff!important;
-box-shadow:none;
+box-shadow:0 10px 22px rgba(57,205,162,.16);
 font-size:12px;
-letter-spacing:.3px
+font-weight:900;
+letter-spacing:.3px;
+cursor:pointer;
 }
 
 #copyChargeback:hover{
-background:#a8efd7!important;
-box-shadow:none
+background:linear-gradient(135deg,#8aefd0,#65dbb7)!important;
+box-shadow:0 13px 26px rgba(57,205,162,.21);
+filter:saturate(1.03);
+transform:translateY(-1px);
 }
 
 
