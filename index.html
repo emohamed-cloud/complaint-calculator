@@ -1,1 +1,65 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Axis Pay - Complaint Calculator</title><link rel="stylesheet" href="style.css"></head><body><main class="app"><section class="card"><header><div class="brand"><div class="badge"><span>AXIS</span></div><div><h1>Complaint Calculator</h1><p>Calculate complaint SLA, due date and remaining time</p></div></div></header><section class="form"><label>Complaint Date</label><input type="date" id="date"><label>Category</label><div class="search"><input id="search" autocomplete="off" placeholder="Search or select category..."><div id="list" class="list hidden"></div></div><div id="chosen"></div><button id="calc">CALCULATE</button><div id="error" class="error hidden"></div></section><section id="results" class="results hidden"><div class="grid"><div><span id="dayLabel">Current Business Day</span><b id="current">-</b></div><div><span>SLA Due Date</span><b id="due">-</b></div><div><span>Remaining Time</span><b id="remain">-</b></div><div><span>Complaint Date</span><b id="complaint">-</b></div><div><span>Today</span><b id="today">-</b></div><div><span>SLA</span><b id="sla">-</b></div></div><div id="status" class="status"></div><div id="holiday" class="info hidden"><h3>Holidays During SLA Period</h3><ul id="holidays"></ul></div><div id="chargeback" class="info hidden"><h3>Charge Back</h3><div id="chargebackText"></div><button id="copyChargeback" type="button">Copy Charge Back</button></div></section><footer>Designed with care by Esraa</footer></section></main><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AxisPay - Complaint Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <section class="card">
+      <header class="header">
+        <div class="brand-logo">AxisPay</div>
+        <div class="header-title">
+          <h1>Complaint Calculator</h1>
+          <p>Calculate complaint SLA, due date and remaining time</p>
+        </div>
+      </header>
+
+      <section class="form">
+        <label for="date">Complaint Date</label>
+        <input type="date" id="date">
+
+        <label for="search">Category</label>
+        <div class="search">
+          <input id="search" autocomplete="off" placeholder="Search or select category...">
+          <div id="list" class="list hidden"></div>
+        </div>
+
+        <div id="chosen"></div>
+        <button id="calc" type="button">CALCULATE</button>
+        <div id="error" class="error hidden"></div>
+      </section>
+
+      <section id="results" class="results hidden">
+        <div class="grid">
+          <div><span id="dayLabel">Current Business Day</span><b id="current">-</b></div>
+          <div><span>SLA Due Date</span><b id="due">-</b></div>
+          <div><span>Remaining Time</span><b id="remain">-</b></div>
+          <div><span>Complaint Date</span><b id="complaint">-</b></div>
+          <div><span>Today</span><b id="today">-</b></div>
+          <div><span>SLA</span><b id="sla">-</b></div>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div id="holiday" class="info hidden">
+          <h3>Holidays During SLA Period</h3>
+          <ul id="holidays"></ul>
+        </div>
+
+        <div id="chargeback" class="info hidden">
+          <h3>Charge Back</h3>
+          <div id="chargebackText"></div>
+          <button id="copyChargeback" type="button">Copy Charge Back</button>
+        </div>
+      </section>
+
+      <footer>Designed with care by Esraa</footer>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
