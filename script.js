@@ -829,7 +829,7 @@ function calculate() {
         : "Within SLA";
 
 
- /* INTERNAL COMMENT */
+/* INTERNAL COMMENT */
 
 if (
   internalComment &&
@@ -846,21 +846,21 @@ if (
   if (today > due) {
 
     comment =
-      `Customer asked about escalation. Informed that the complaint duration is ${cfg[0]} ${slaType} and the SLA has been exceeded. The SLA expired on ${fmt(due)}.`;
+      `Customer asked about escalation. Informed that the complaint duration is <strong>${cfg[0]} ${slaType}</strong> and the SLA has been exceeded. The SLA expired on <strong>${fmt(due)}</strong>.`;
 
   } else if (today < complaintDate) {
 
     comment =
-      `Customer asked about escalation. Informed that the complaint duration is ${cfg[0]} ${slaType}. SLA expires on ${fmt(due)}.`;
+      `Customer asked about escalation. Informed that the complaint duration is <strong>${cfg[0]} ${slaType}</strong>. SLA expires on <strong>${fmt(due)}</strong>.`;
 
   } else {
 
     comment =
-      `Customer asked about escalation. Informed that the complaint duration is ${cfg[0]} ${slaType} and it is currently on day ${currentDay}. SLA expires on ${fmt(due)}.`;
+      `Customer asked about escalation. Informed that the complaint duration is <strong>${cfg[0]} ${slaType}</strong> and it is currently on <strong>day ${currentDay}</strong>. SLA expires on <strong>${fmt(due)}</strong>.`;
 
   }
 
-  internalCommentText.textContent =
+  internalCommentText.innerHTML =
     comment;
 
   internalComment.classList.remove(
