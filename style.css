@@ -560,3 +560,35 @@ border-radius:24px
 }
 
 }
+
+/* Internal Comment */
+
+#internalComment {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f3fbf7;
+  border: 1px solid #d5eee1;
+}
+
+#internalComment h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+#internalCommentText {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #374151;
+  margin-bottom: 10px;
+}
+
+#copyInternalComment {
+  width: auto;
+  min-width: 100px;
+  padding: 7px 12px;
+  font-size: 12px;
+  border-radius: 7px;
+  cursor: pointer;
+}
