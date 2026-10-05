@@ -829,51 +829,45 @@ function calculate() {
         : "Within SLA";
 
 
-  /* INTERNAL COMMENT */
+ /* INTERNAL COMMENT */
 
-  if (
-    internalComment &&
-    internalCommentText
-  ) {
+if (
+  internalComment &&
+  internalCommentText
+) {
 
-    let comment = "";
+  const slaType =
+    cfg[1] === "business"
+      ? "working days"
+      : "days";
 
-    const slaType =
-      cfg[1] === "business"
-        ? "Business Days"
-        : "Calendar Days";
+  let comment = "";
 
+  if (today > due) {
 
-    if (today < complaintDate) {
+    comment =
+      `Customer asked about escalation. Informed that the complaint duration is ${cfg[0]} ${slaType} and the SLA has been exceeded. The SLA expired on ${fmt(due)}.`;
 
-      comment =
-        `Customer asked about escalation. I informed the customer that the complaint date is in the future. The complaint was submitted on ${fmt(complaintDate)}, and the SLA will expire on ${fmt(due)}.`;
+  } else if (today < complaintDate) {
 
-    }
+    comment =
+      `Customer asked about escalation. Informed that the complaint duration is ${cfg[0]} ${slaType}. SLA expires on ${fmt(due)}.`;
 
-    else if (today > due) {
+  } else {
 
-      comment =
-        `Customer asked about escalation. I informed the customer that the complaint has exceeded the ${cfg[0]} ${slaType} SLA. The complaint was submitted on ${fmt(complaintDate)}, and the SLA expired on ${fmt(due)}.`;
-
-    }
-
-    else {
-
-      comment =
-        `Customer asked about escalation. I informed the customer that the complaint is currently on day ${currentDay} of ${cfg[0]} ${slaType} SLA. The complaint was submitted on ${fmt(complaintDate)}, and the SLA will expire on ${fmt(due)}.`;
-
-    }
-
-
-    internalCommentText.textContent =
-      comment;
-
-    internalComment.classList.remove(
-      "hidden"
-    );
+    comment =
+      `Customer asked about escalation. Informed that the complaint duration is ${cfg[0]} ${slaType} and it is currently on day ${currentDay}. SLA expires on ${fmt(due)}.`;
 
   }
+
+  internalCommentText.textContent =
+    comment;
+
+  internalComment.classList.remove(
+    "hidden"
+  );
+
+}
 
 
   /* HOLIDAYS */
