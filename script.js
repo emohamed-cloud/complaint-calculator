@@ -1024,34 +1024,40 @@ if (copyInternalComment) {
     "click",
     async () => {
 
-      const text =
-        internalCommentText
-          ? internalCommentText.textContent
-          : "";
-
-
-      if (!text) {
+      if (!internalCommentText) {
         return;
       }
 
+      const html =
+        internalCommentText.innerHTML;
+
+      const text =
+        internalCommentText.innerText;
 
       try {
 
-        await navigator
-          .clipboard
-          .writeText(text);
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            "text/html": new Blob(
+              [html],
+              { type: "text/html" }
+            ),
+
+            "text/plain": new Blob(
+              [text],
+              { type: "text/plain" }
+            )
+          })
+        ]);
 
       }
 
       catch (error) {
 
         const textarea =
-          document.createElement(
-            "textarea"
-          );
+          document.createElement("textarea");
 
-        textarea.value =
-          text;
+        textarea.value = text;
 
         document.body.appendChild(
           textarea
