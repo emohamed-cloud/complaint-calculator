@@ -589,11 +589,19 @@ border-radius:24px
 }
 
 #copyInternalComment {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   width: auto !important;
-  min-width: unset !important;
-  max-width: 90px !important;
-  padding: 5px 9px !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 28px !important;
+  padding: 4px 10px !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow: hidden !important;
   font-size: 11px !important;
-  line-height: 1.2 !important;
+  line-height: 1 !important;
   border-radius: 6px !important;
 }
