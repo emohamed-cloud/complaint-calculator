@@ -34,7 +34,7 @@ const S={
 
 "P2M-posted":[25,"business"],
 
-"P2M 2D":[2,"calendar"],
+"P2M Within 2D":[2,"calendar"],
 
 "Transaction Escalation*Exceeded 45D or not*":[45,"calendar"],
 
@@ -144,7 +144,6 @@ Amount:
 Transaction Reference:
 Date and time:
 
-Please attach a photo of the transaction from portal.`,
 
 "ATM Cashin-Not found":`Wallet number:
 ID:
@@ -152,7 +151,6 @@ Bank name:
 Amount:
 Date and time:
 
-Please attach a photo of the transaction from portal.`,
 
 "ATM Cash Out Reversal – Zero Amount":`Wallet Number:
 ID:
@@ -161,7 +159,6 @@ Amount:
 Transaction Reference:
 Date and time:
 
-Please attach a photo of the transaction from portal.`,
 
 "P2M-posted":`Wallet Number:
 ID:
@@ -170,16 +167,6 @@ Transaction Reference:
 Date and Time:
 Merchant:
 
-Please attach a photo of the transaction from portal`,
-
-"P2M 2D":`Wallet Number:
-ID:
-Amount:
-Transaction Reference:
-Date and Time:
-Merchant:
-
-Please attach a photo of the transaction from portal`,
 
 "send p2p off us issue(Mezza reference)":`Sender Wallet:
 Receiver Wallet:
