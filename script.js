@@ -18,8 +18,7 @@ const S = {
   "Send p2p-Pending Advise": [3, "business"],
   "Receive p2p-Pending Advise": [3, "business"],
   "ATM Cashout Reversal-Created": [3, "business"],
-  " Reversal-Failed": [3, "business"],
-
+"ATM Cashout Reversal-Failed": [3, "business"],
   "Wallet Replacment": [5, "business"],
 
   "UnSuspended wallet-DATE from KYC Approved": [10, "business"],
@@ -301,7 +300,7 @@ if (CB[c]) {
 
 
     if (
-      c === "ATM Cashout-Posted" &&
+      c === "ATM Cashout issue-Posted"
       line.trim().startsWith(
         "The customer attempted to cash out"
       )
@@ -417,9 +416,10 @@ else {
 
 }
 
+}
+
 
 /* SHOW / FILTER CATEGORIES */
-
 function show(q = "") {
 
   const query =
