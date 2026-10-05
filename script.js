@@ -18,7 +18,7 @@ const S = {
   "Send p2p-Pending Advise": [3, "business"],
   "Receive p2p-Pending Advise": [3, "business"],
   "ATM Cashout Reversal-Created": [3, "business"],
-  "ATM Cashout Reversal-Failed": [3, "business"],
+  " Reversal-Failed": [3, "business"],
 
   "Wallet Replacment": [5, "business"],
 
@@ -146,8 +146,7 @@ Amount:
 Transaction Reference:
 Date and time:
 
-<strong>The customer attempted to cash out EGP 00. He received EGP 00, while the remaining EGP 00 was not received.</strong>`,
-  
+The customer attempted to cash out EGP 00. He received EGP 00, while the remaining EGP 00 was not received.`,  
   "ATM Cashin-Not found": `Wallet number:
 ID:
 Bank name:
