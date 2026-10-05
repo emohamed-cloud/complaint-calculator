@@ -578,10 +578,14 @@ border-radius:24px
 }
 
 #internalCommentText {
-  font-size: 13px;
-  line-height: 1.6;
-  color: #374151;
-  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #1f2937;
+}
+
+#internalCommentText strong {
+  font-weight: 700;
 }
 
 #copyInternalComment {
