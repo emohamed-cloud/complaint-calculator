@@ -29,7 +29,7 @@ const S = {
   "Fawry Cashout-Posted": [15, "business"],
   "Agent Cashin-Posted": [15, "business"],
   "Agent Cashout-Posted": [15, "business"],
-  "ATM Cashout-Posted": [15, "business"],
+  "ATM Cashout issue-Posted": [15, "business"],
   "ATM Cashin-Not found": [15, "business"],
   "ATM Cash Out Reversal – Zero Amount": [15, "business"],
 
@@ -139,7 +139,7 @@ Amount:
 Transaction Reference:
 Date and time:`,
 
-"ATM Cashout-Posted": `Wallet Number:
+"ATM Cashout issue-Posted": `Wallet Number:
 ID:
 Bank name:
 Amount:
@@ -302,7 +302,7 @@ function showChargeback(c) {
     document.createElement("div");
 
   if (
-    c === "ATM Cashout-Posted" &&
+    c === "ATM Cashout issue-Posted" &&
     line.includes("The customer attempted to cash out")
   ) {
     e.style.fontWeight = "700";
