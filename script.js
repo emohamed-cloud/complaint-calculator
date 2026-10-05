@@ -286,150 +286,133 @@ function showChargeback(c) {
 
   /* CHARGE BACK */
 
-  chargebackText.innerHTML = "";
+chargebackText.innerHTML = "";
+
+if (CB[c]) {
+
+  if (chargebackEmpty) {
+    chargebackEmpty.classList.add("hidden");
+  }
+
+  CB[c].split("\n").forEach(line => {
+
+    const e =
+      document.createElement("div");
 
 
-  if (CB[c]) {
+    if (
+      c === "ATM Cashout-Posted" &&
+      line.trim().startsWith(
+        "The customer attempted to cash out"
+      )
+    ) {
 
-    if (chargebackEmpty) {
-      chargebackEmpty.classList.add("hidden");
+      e.style.fontWeight = "700";
+      e.style.marginTop = "14px";
+      e.style.paddingTop = "4px";
+
     }
 
 
-    CB[c].split("\n").forEach(line => {
+    if (/^https?:\/\//i.test(line)) {
 
-  const e =
-    document.createElement("div");
+      const a =
+        document.createElement("a");
 
-  e.textContent = line;
-
-  if (
-    c === "ATM Cashout-Posted" &&
-    line.trim().startsWith(
-      "The customer attempted to cash out"
-    )
-  ) {
-
-    e.style.fontWeight = "700";
-    e.style.marginTop = "14px";
-    e.style.paddingTop = "4px";
-
-  }
-
-  chargebackText.appendChild(e);
-
-});
-
-  if (
-  c === "ATM Cashout-Posted" &&
-  line.includes("The customer attempted to cash out")
-) {
-  e.style.fontWeight = "700";
-  e.style.marginTop = "12px";
-}
+      a.href = line;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
 
 
-      if (/^https?:\/\//i.test(line)) {
+      if (
+        line.includes(
+          "Se8jRCDTLeRkK3kMTINTYWthhGtE1AKRClfGHRpVN39OCDcYg"
+        )
+      ) {
 
-        const a =
-          document.createElement("a");
+        a.textContent =
+          "Open Archived Form";
 
-        a.href = line;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
+      }
 
+      else if (
+        line.includes(
+          "1kRdu3QqtMKq2DLXywzV9kr1HCmlv2Hs1RrfxpyXsF1A"
+        )
+      ) {
 
-        if (
-          line.includes(
-            "Se8jRCDTLeRkK3kMTINTYWthhGtE1AKRClfGHRpVN39OCDcYg"
-          )
-        ) {
+        a.textContent =
+          "Open Archived Sheet";
 
-          a.textContent =
-            "Open Archived Form";
+      }
 
-        }
+      else if (
+        line.includes(
+          "SdAbh8Y6x6Me9RB9_U7_k-RBmmb1DTyqUhqmS_RVkTRsqH-Ig"
+        )
+      ) {
 
-        else if (
-          line.includes(
-            "1kRdu3QqtMKq2DLXywzV9kr1HCmlv2Hs1RrfxpyXsF1A"
-          )
-        ) {
+        a.textContent =
+          "Open Ticketing System Form";
 
-          a.textContent =
-            "Open Archived Sheet";
+      }
 
-        }
+      else if (
+        line.includes(
+          "11HOZUFZgt6u3G_2JP-HeXc-3ro2v-61EdbaOFz_zKtQ"
+        )
+      ) {
 
-        else if (
-          line.includes(
-            "SdAbh8Y6x6Me9RB9_U7_k-RBmmb1DTyqUhqmS_RVkTRsqH-Ig"
-          )
-        ) {
-
-          a.textContent =
-            "Open Ticketing System Form";
-
-        }
-
-        else if (
-          line.includes(
-            "11HOZUFZgt6u3G_2JP-HeXc-3ro2v-61EdbaOFz_zKtQ"
-          )
-        ) {
-
-          a.textContent =
-            "Open Ticketing System Sheet";
-
-        }
-
-        else {
-
-          a.textContent =
-            "Open Link";
-
-        }
-
-
-        e.appendChild(a);
+        a.textContent =
+          "Open Ticketing System Sheet";
 
       }
 
       else {
 
-        e.textContent = line;
-
-
-        if (
-          /attach|assign the case|please fill this form/i
-            .test(line)
-        ) {
-
-          e.className =
-            "instruction";
-
-        }
+        a.textContent =
+          "Open Link";
 
       }
 
 
-      chargebackText.appendChild(e);
+      e.appendChild(a);
 
-    });
-
-
-    chargeback.classList.remove("hidden");
-
-  }
-
-  else {
-
-    chargeback.classList.add("hidden");
-
-    if (chargebackEmpty) {
-      chargebackEmpty.classList.remove("hidden");
     }
 
+    else {
+
+      e.textContent = line;
+
+
+      if (
+        /attach|assign the case|please fill this form/i
+          .test(line)
+      ) {
+
+        e.className =
+          "instruction";
+
+      }
+
+    }
+
+
+    chargebackText.appendChild(e);
+
+  });
+
+
+  chargeback.classList.remove("hidden");
+
+}
+
+else {
+
+  chargeback.classList.add("hidden");
+
+  if (chargebackEmpty) {
+    chargebackEmpty.classList.remove("hidden");
   }
 
 }
