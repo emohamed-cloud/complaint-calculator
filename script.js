@@ -301,6 +301,25 @@ function showChargeback(c) {
   const e =
     document.createElement("div");
 
+  e.textContent = line;
+
+  if (
+    c === "ATM Cashout-Posted" &&
+    line.trim().startsWith(
+      "The customer attempted to cash out"
+    )
+  ) {
+
+    e.style.fontWeight = "700";
+    e.style.marginTop = "14px";
+    e.style.paddingTop = "4px";
+
+  }
+
+  chargebackText.appendChild(e);
+
+});
+
   if (
   c === "ATM Cashout-Posted" &&
   line.includes("The customer attempted to cash out")
