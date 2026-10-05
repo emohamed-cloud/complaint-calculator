@@ -1,1 +1,278 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <title>AxisPay - Complaint Calculator</title> <link rel="stylesheet" href="style.css"> </head> <body> <main class="app"> <section class="card"> <header> <div class="brand"> <div class="badge"> <span>AxisPay</span> </div> <div class="brand-text"> <h1>Complaint Calculator</h1> <p>Calculate complaint SLA, due date and remaining time</p> </div> </div> </header> <div class="main-layout"> <!-- LEFT SIDE : CATEGORY + CHARGE BACK --> <section class="category-panel"> <div class="form"> <label for="search">Category</label> <div class="search"> <input id="search" autocomplete="off" placeholder="Search or select category..." > <div id="list" class="list hidden"></div> </div> </div> <div id="slaBox" class="sla-box hidden"> <span>SLA</span> <b id="categorySla">-</b> </div> <div id="chargeback" class="info hidden"> <h3>Charge Back</h3> <div id="chargebackText"></div> <button id="copyChargeback" type="button"> Copy Charge Back </button> </div> </section> <!-- RIGHT SIDE : COMPLAINT CALCULATOR --> <section class="calculator-panel"> <div class="form"> <label for="date">Complaint Date</label> <input type="date" id="date"> <button id="calc" type="button"> CALCULATE </button> <div id="error" class="error hidden"></div> </div> <section id="results" class="results hidden"> <div class="grid"> <div> <span id="dayLabel">Current Business Day</span> <b id="current">-</b> </div> <div> <span>SLA Due Date</span> <b id="due">-</b> </div> <div> <span>Remaining Time</span> <b id="remain">-</b> </div> <div> <span>Complaint Date</span> <b id="complaint">-</b> </div> <div> <span>Today</span> <b id="today">-</b> </div> <div> <span>SLA</span> <b id="sla">-</b> </div> </div> <div id="status" class="status"></div> <div id="holiday" class="info hidden"> <h3>Holidays During SLA Period</h3> <ul id="holidays"></ul> </div> </section> </section> </div> <footer> Designed with care by Esraa </footer> </section> </main> <script src="script.js"></script> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
+  <title>AxisPay - Complaint Calculator</title>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <main class="app">
+
+    <section class="card">
+
+      <header>
+
+        <div class="brand">
+
+          <div class="badge">
+            <span>AxisPay</span>
+          </div>
+
+          <div class="brand-text">
+
+            <h1>
+              Complaint Calculator
+            </h1>
+
+            <p>
+              Calculate complaint SLA, due date and remaining time
+            </p>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <div class="main-layout">
+
+
+        <!-- LEFT SIDE : CATEGORY + CHARGE BACK -->
+
+        <section class="category-panel">
+
+          <div class="form">
+
+            <label for="search">
+              Category
+            </label>
+
+            <div class="search">
+
+              <input
+                id="search"
+                autocomplete="off"
+                placeholder="Search or select category..."
+              >
+
+              <div
+                id="list"
+                class="list hidden"
+              ></div>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="slaBox"
+            class="sla-box hidden"
+          >
+
+            <span>
+              SLA
+            </span>
+
+            <b id="categorySla">
+              -
+            </b>
+
+          </div>
+
+
+          <div
+            id="chargeback"
+            class="info hidden"
+          >
+
+            <h3>
+              Charge Back
+            </h3>
+
+            <div id="chargebackText"></div>
+
+            <button
+              id="copyChargeback"
+              type="button"
+            >
+              Copy Charge Back
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <!-- RIGHT SIDE : COMPLAINT CALCULATOR -->
+
+        <section class="calculator-panel">
+
+          <div class="form">
+
+            <label for="date">
+              Complaint Date
+            </label>
+
+            <input
+              type="date"
+              id="date"
+            >
+
+            <button
+              id="calc"
+              type="button"
+            >
+              CALCULATE
+            </button>
+
+            <div
+              id="error"
+              class="error hidden"
+            ></div>
+
+          </div>
+
+
+          <section
+            id="results"
+            class="results hidden"
+          >
+
+            <div class="grid">
+
+
+              <div>
+
+                <span id="dayLabel">
+                  Current Business Day
+                </span>
+
+                <b id="current">
+                  -
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  SLA Due Date
+                </span>
+
+                <b id="due">
+                  -
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Remaining Time
+                </span>
+
+                <b id="remain">
+                  -
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Complaint Date
+                </span>
+
+                <b id="complaint">
+                  -
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  Today
+                </span>
+
+                <b id="today">
+                  -
+                </b>
+
+              </div>
+
+
+              <div>
+
+                <span>
+                  SLA
+                </span>
+
+                <b id="sla">
+                  -
+                </b>
+
+              </div>
+
+
+            </div>
+
+
+            <div
+              id="status"
+              class="status"
+            ></div>
+
+
+            <div
+              id="holiday"
+              class="info hidden"
+            >
+
+              <h3>
+                Holidays During SLA Period
+              </h3>
+
+              <ul id="holidays"></ul>
+
+            </div>
+
+          </section>
+
+        </section>
+
+      </div>
+
+
+      <footer>
+        Designed with care by Esraa
+      </footer>
+
+    </section>
+
+  </main>
+
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
