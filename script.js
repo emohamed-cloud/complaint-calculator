@@ -302,11 +302,12 @@ function showChargeback(c) {
     document.createElement("div");
 
   if (
-    c === "ATM Cashout issue-Posted" &&
-    line.includes("The customer attempted to cash out")
-  ) {
-    e.style.fontWeight = "700";
-  }
+  c === "ATM Cashout-Posted" &&
+  line.includes("The customer attempted to cash out")
+) {
+  e.style.fontWeight = "700";
+  e.style.marginTop = "12px";
+}
 
 
       if (/^https?:\/\//i.test(line)) {
