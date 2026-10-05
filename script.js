@@ -188,9 +188,9 @@ const categorySla = document.getElementById("categorySla");
 const chargeback = document.getElementById("chargeback");
 const chargebackText = document.getElementById("chargebackText");
 
-const chargebackEmpty = document.getElementById("chargebackEmpty");
+const chargebackEmpty =
+  document.getElementById("chargebackEmpty");
 
-let selected = "";
 const internalComment =
   document.getElementById("internalComment");
 
@@ -200,23 +200,38 @@ const internalCommentText =
 const copyInternalComment =
   document.getElementById("copyInternalComment");
 
-const pad = n => String(n).padStart(2, "0");
+let selected = "";
+
+
+const pad = n =>
+  String(n).padStart(2, "0");
+
 
 const key = d =>
   `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 
+
 const parse = v => {
-  const [y, m, d] = v.split("-").map(Number);
+
+  const [y, m, d] =
+    v.split("-").map(Number);
+
   return new Date(y, m - 1, d);
+
 };
+
 
 const fmt = d =>
   `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
 
-const holiday = d => H[key(d)] !== undefined;
+
+const holiday = d =>
+  H[key(d)] !== undefined;
+
 
 const work = d =>
-  ![5, 6].includes(d.getDay()) && !holiday(d);
+  ![5, 6].includes(d.getDay()) &&
+  !holiday(d);
 
 
 /* SHOW CATEGORY INFORMATION */
@@ -227,7 +242,10 @@ function showChargeback(c) {
 
   if (!cfg) {
 
-    if (slaBox) slaBox.classList.add("hidden");
+    if (slaBox) {
+      slaBox.classList.add("hidden");
+    }
+
     chargeback.classList.add("hidden");
 
     if (chargebackEmpty) {
@@ -250,10 +268,14 @@ function showChargeback(c) {
       ? "Day"
       : "Days";
 
+
   if (categorySla) {
+
     categorySla.textContent =
       `${cfg[0]} ${type} ${dayText}`;
+
   }
+
 
   if (slaBox) {
     slaBox.classList.remove("hidden");
@@ -271,24 +293,32 @@ function showChargeback(c) {
       chargebackEmpty.classList.add("hidden");
     }
 
+
     CB[c].split("\n").forEach(line => {
 
-      const e = document.createElement("div");
+      const e =
+        document.createElement("div");
+
 
       if (/^https?:\/\//i.test(line)) {
 
-        const a = document.createElement("a");
+        const a =
+          document.createElement("a");
 
         a.href = line;
         a.target = "_blank";
         a.rel = "noopener noreferrer";
+
 
         if (
           line.includes(
             "Se8jRCDTLeRkK3kMTINTYWthhGtE1AKRClfGHRpVN39OCDcYg"
           )
         ) {
-          a.textContent = "Open Archived Form";
+
+          a.textContent =
+            "Open Archived Form";
+
         }
 
         else if (
@@ -296,7 +326,10 @@ function showChargeback(c) {
             "1kRdu3QqtMKq2DLXywzV9kr1HCmlv2Hs1RrfxpyXsF1A"
           )
         ) {
-          a.textContent = "Open Archived Sheet";
+
+          a.textContent =
+            "Open Archived Sheet";
+
         }
 
         else if (
@@ -304,7 +337,10 @@ function showChargeback(c) {
             "SdAbh8Y6x6Me9RB9_U7_k-RBmmb1DTyqUhqmS_RVkTRsqH-Ig"
           )
         ) {
-          a.textContent = "Open Ticketing System Form";
+
+          a.textContent =
+            "Open Ticketing System Form";
+
         }
 
         else if (
@@ -312,34 +348,52 @@ function showChargeback(c) {
             "11HOZUFZgt6u3G_2JP-HeXc-3ro2v-61EdbaOFz_zKtQ"
           )
         ) {
-          a.textContent = "Open Ticketing System Sheet";
+
+          a.textContent =
+            "Open Ticketing System Sheet";
+
         }
 
         else {
-          a.textContent = "Open Link";
+
+          a.textContent =
+            "Open Link";
+
         }
+
 
         e.appendChild(a);
 
-      } else {
+      }
+
+      else {
 
         e.textContent = line;
 
+
         if (
-          /attach|assign the case|please fill this form/i.test(line)
+          /attach|assign the case|please fill this form/i
+            .test(line)
         ) {
-          e.className = "instruction";
+
+          e.className =
+            "instruction";
+
         }
 
       }
+
 
       chargebackText.appendChild(e);
 
     });
 
+
     chargeback.classList.remove("hidden");
 
-  } else {
+  }
+
+  else {
 
     chargeback.classList.add("hidden");
 
@@ -356,22 +410,28 @@ function showChargeback(c) {
 
 function show(q = "") {
 
-  const query = q.trim().toLowerCase();
+  const query =
+    q.trim().toLowerCase();
 
   list.innerHTML = "";
 
-  const filtered = cats.filter(c =>
-    c.toLowerCase().includes(query)
-  );
+
+  const filtered =
+    cats.filter(c =>
+      c.toLowerCase().includes(query)
+    );
 
 
   filtered.forEach(c => {
 
-    const e = document.createElement("div");
+    const e =
+      document.createElement("div");
 
-    e.className = "option";
+    e.className =
+      "option";
 
-    e.textContent = c;
+    e.textContent =
+      c;
 
 
     e.onmousedown = event => {
@@ -395,9 +455,15 @@ function show(q = "") {
 
 
   if (filtered.length > 0) {
+
     list.classList.remove("hidden");
-  } else {
+
+  }
+
+  else {
+
     list.classList.add("hidden");
+
   }
 
 }
@@ -405,52 +471,66 @@ function show(q = "") {
 
 /* OPEN CATEGORY LIST */
 
-search.addEventListener("focus", () => {
-  show(search.value);
-});
+search.addEventListener(
+  "focus",
+  () => {
+    show(search.value);
+  }
+);
 
 
 /* LIVE SEARCH */
 
-search.addEventListener("input", () => {
+search.addEventListener(
+  "input",
+  () => {
 
-  selected = "";
+    selected = "";
 
-  if (slaBox) {
-    slaBox.classList.add("hidden");
+    if (slaBox) {
+      slaBox.classList.add("hidden");
+    }
+
+    chargeback.classList.add("hidden");
+
+    if (chargebackEmpty) {
+      chargebackEmpty.classList.remove("hidden");
+    }
+
+    show(search.value);
+
   }
-
-  chargeback.classList.add("hidden");
-
-  if (chargebackEmpty) {
-    chargebackEmpty.classList.remove("hidden");
-  }
-
-  show(search.value);
-
-});
+);
 
 
 /* CLOSE LIST */
 
-document.addEventListener("click", event => {
+document.addEventListener(
+  "click",
+  event => {
 
-  if (!event.target.closest(".search")) {
-    list.classList.add("hidden");
+    if (!event.target.closest(".search")) {
+      list.classList.add("hidden");
+    }
+
   }
-
-});
+);
 
 
 /* ADD BUSINESS DAYS */
 
 function addBiz(dateValue, n) {
 
-  const d = new Date(dateValue);
+  const d =
+    new Date(dateValue);
+
 
   while (n > 0) {
 
-    d.setDate(d.getDate() + 1);
+    d.setDate(
+      d.getDate() + 1
+    );
+
 
     if (work(d)) {
       n--;
@@ -458,7 +538,9 @@ function addBiz(dateValue, n) {
 
   }
 
+
   return d;
+
 }
 
 
@@ -466,9 +548,12 @@ function addBiz(dateValue, n) {
 
 function addCal(dateValue, n) {
 
-  const d = new Date(dateValue);
+  const d =
+    new Date(dateValue);
 
-  d.setDate(d.getDate() + n);
+  d.setDate(
+    d.getDate() + n
+  );
 
   return d;
 
@@ -481,17 +566,23 @@ function countBiz(start, end) {
 
   let count = 0;
 
-  const d = new Date(start);
+  const d =
+    new Date(start);
+
 
   while (d < end) {
 
-    d.setDate(d.getDate() + 1);
+    d.setDate(
+      d.getDate() + 1
+    );
+
 
     if (d <= end && work(d)) {
       count++;
     }
 
   }
+
 
   return count;
 
@@ -506,6 +597,7 @@ function countCal(start, end) {
     return 0;
   }
 
+
   return Math.floor(
     (end - start) / 86400000
   );
@@ -517,7 +609,8 @@ function countCal(start, end) {
 
 function calculate() {
 
-  const error = document.getElementById("error");
+  const error =
+    document.getElementById("error");
 
   error.classList.add("hidden");
 
@@ -538,7 +631,8 @@ function calculate() {
     selected ||
     search.value.trim();
 
-  const cfg = S[category];
+  const cfg =
+    S[category];
 
 
   if (!cfg) {
@@ -557,29 +651,44 @@ function calculate() {
     parse(date.value);
 
 
-  let today = new Date();
+  let today =
+    new Date();
 
-  today = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
-  );
+
+  today =
+    new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
 
 
   /* DUE DATE */
 
   const due =
     cfg[1] === "business"
-      ? addBiz(complaintDate, cfg[0])
-      : addCal(complaintDate, cfg[0]);
+      ? addBiz(
+          complaintDate,
+          cfg[0]
+        )
+      : addCal(
+          complaintDate,
+          cfg[0]
+        );
 
 
   /* CURRENT DAY */
 
   let currentDay =
     cfg[1] === "business"
-      ? countBiz(complaintDate, today)
-      : countCal(complaintDate, today);
+      ? countBiz(
+          complaintDate,
+          today
+        )
+      : countCal(
+          complaintDate,
+          today
+        );
 
 
   if (today < complaintDate) {
@@ -594,7 +703,8 @@ function calculate() {
 
   if (today < complaintDate) {
 
-    remaining = cfg[0];
+    remaining =
+      cfg[0];
 
   }
 
@@ -616,7 +726,9 @@ function calculate() {
 
   /* LABEL */
 
-  document.getElementById("dayLabel").textContent =
+  document.getElementById(
+    "dayLabel"
+  ).textContent =
     cfg[1] === "business"
       ? "Current Business Day"
       : "Current Calendar Day";
@@ -624,44 +736,79 @@ function calculate() {
 
   /* CURRENT */
 
-  document.getElementById("current").textContent =
-    `Day ${currentDay} of ${cfg[0]} ${cfg[1] === "business" ? "Business" : "Calendar"} Day${cfg[0] === 1 ? "" : "s"}`;
+  document.getElementById(
+    "current"
+  ).textContent =
+    `Day ${currentDay} of ${cfg[0]} ${
+      cfg[1] === "business"
+        ? "Business"
+        : "Calendar"
+    } Day${
+      cfg[0] === 1
+        ? ""
+        : "s"
+    }`;
 
 
   /* DUE DATE */
 
-  document.getElementById("due").textContent =
+  document.getElementById(
+    "due"
+  ).textContent =
     fmt(due);
 
 
   /* REMAINING */
 
-  document.getElementById("remain").textContent =
-    `${remaining} ${cfg[1] === "business" ? "Business" : "Calendar"} Day${remaining === 1 ? "" : "s"}`;
+  document.getElementById(
+    "remain"
+  ).textContent =
+    `${remaining} ${
+      cfg[1] === "business"
+        ? "Business"
+        : "Calendar"
+    } Day${
+      remaining === 1
+        ? ""
+        : "s"
+    }`;
 
 
   /* COMPLAINT DATE */
 
-  document.getElementById("complaint").textContent =
+  document.getElementById(
+    "complaint"
+  ).textContent =
     fmt(complaintDate);
 
 
   /* TODAY */
 
-  document.getElementById("today").textContent =
+  document.getElementById(
+    "today"
+  ).textContent =
     fmt(today);
 
 
   /* SLA */
 
-  document.getElementById("sla").textContent =
-    `${cfg[0]} ${cfg[1] === "business" ? "Business" : "Calendar"} Days`;
+  document.getElementById(
+    "sla"
+  ).textContent =
+    `${cfg[0]} ${
+      cfg[1] === "business"
+        ? "Business"
+        : "Calendar"
+    } Days`;
 
 
   /* STATUS */
 
   const status =
-    document.getElementById("status");
+    document.getElementById(
+      "status"
+    );
+
 
   status.className =
     "status " +
@@ -680,47 +827,67 @@ function calculate() {
       : today > due
         ? "SLA Exceeded"
         : "Within SLA";
-/* INTERNAL COMMENT */
 
-let comment = "";
 
-const slaType =
-  cfg[1] === "business"
-    ? "Business Days"
-    : "Calendar Days";
+  /* INTERNAL COMMENT */
 
-if (today < complaintDate) {
+  if (
+    internalComment &&
+    internalCommentText
+  ) {
 
-  comment =
-    `Customer asked about escalation. I informed the customer that the complaint date is in the future. The complaint was submitted on ${fmt(complaintDate)}, and the SLA will expire on ${fmt(due)}.`;
+    let comment = "";
 
-}
+    const slaType =
+      cfg[1] === "business"
+        ? "Business Days"
+        : "Calendar Days";
 
-else if (today > due) {
 
-  comment =
-    `Customer asked about escalation. I informed the customer that the complaint has exceeded the ${cfg[0]} ${slaType} SLA. The complaint was submitted on ${fmt(complaintDate)}, and the SLA expired on ${fmt(due)}.`;
+    if (today < complaintDate) {
 
-}
+      comment =
+        `Customer asked about escalation. I informed the customer that the complaint date is in the future. The complaint was submitted on ${fmt(complaintDate)}, and the SLA will expire on ${fmt(due)}.`;
 
-else {
+    }
 
-  comment =
-    `Customer asked about escalation. I informed the customer that the complaint is currently on day ${currentDay} of ${cfg[0]} ${slaType} SLA. The complaint was submitted on ${fmt(complaintDate)}, and the SLA will expire on ${fmt(due)}.`;
+    else if (today > due) {
 
-}
+      comment =
+        `Customer asked about escalation. I informed the customer that the complaint has exceeded the ${cfg[0]} ${slaType} SLA. The complaint was submitted on ${fmt(complaintDate)}, and the SLA expired on ${fmt(due)}.`;
 
-internalCommentText.textContent = comment;
+    }
 
-internalComment.classList.remove("hidden");
+    else {
+
+      comment =
+        `Customer asked about escalation. I informed the customer that the complaint is currently on day ${currentDay} of ${cfg[0]} ${slaType} SLA. The complaint was submitted on ${fmt(complaintDate)}, and the SLA will expire on ${fmt(due)}.`;
+
+    }
+
+
+    internalCommentText.textContent =
+      comment;
+
+    internalComment.classList.remove(
+      "hidden"
+    );
+
+  }
+
 
   /* HOLIDAYS */
 
   const holidayBox =
-    document.getElementById("holiday");
+    document.getElementById(
+      "holiday"
+    );
 
   const holidayList =
-    document.getElementById("holidays");
+    document.getElementById(
+      "holidays"
+    );
+
 
   holidayList.innerHTML = "";
 
@@ -736,6 +903,7 @@ internalComment.classList.remove("hidden");
       const holidayName =
         H[key(d)];
 
+
       if (holidayName) {
 
         const li =
@@ -747,6 +915,7 @@ internalComment.classList.remove("hidden");
         holidayList.appendChild(li);
 
       }
+
 
       d.setDate(
         d.getDate() + 1
@@ -797,7 +966,9 @@ document
 /* COPY CHARGE BACK */
 
 document
-  .getElementById("copyChargeback")
+  .getElementById(
+    "copyChargeback"
+  )
   .addEventListener(
     "click",
     async () => {
@@ -808,6 +979,7 @@ document
 
       const text =
         CB[category];
+
 
       if (!text) {
         return;
@@ -825,9 +997,12 @@ document
       catch (error) {
 
         const textarea =
-          document.createElement("textarea");
+          document.createElement(
+            "textarea"
+          );
 
-        textarea.value = text;
+        textarea.value =
+          text;
 
         document.body.appendChild(
           textarea
@@ -849,45 +1024,56 @@ document
 
 /* COPY INTERNAL COMMENT */
 
-copyInternalComment.addEventListener(
-  "click",
-  async () => {
+if (copyInternalComment) {
 
-    const text =
-      internalCommentText.textContent;
+  copyInternalComment.addEventListener(
+    "click",
+    async () => {
 
-    if (!text) {
-      return;
+      const text =
+        internalCommentText
+          ? internalCommentText.textContent
+          : "";
+
+
+      if (!text) {
+        return;
+      }
+
+
+      try {
+
+        await navigator
+          .clipboard
+          .writeText(text);
+
+      }
+
+      catch (error) {
+
+        const textarea =
+          document.createElement(
+            "textarea"
+          );
+
+        textarea.value =
+          text;
+
+        document.body.appendChild(
+          textarea
+        );
+
+        textarea.select();
+
+        document.execCommand(
+          "copy"
+        );
+
+        textarea.remove();
+
+      }
+
     }
+  );
 
-    try {
-
-      await navigator
-        .clipboard
-        .writeText(text);
-
-    }
-
-    catch (error) {
-
-      const textarea =
-        document.createElement("textarea");
-
-      textarea.value = text;
-
-      document.body.appendChild(
-        textarea
-      );
-
-      textarea.select();
-
-      document.execCommand(
-        "copy"
-      );
-
-      textarea.remove();
-
-    }
-
-  }
-);
+}
