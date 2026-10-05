@@ -146,7 +146,7 @@ Amount:
 Transaction Reference:
 Date and time:
 
-The customer attempted to cash out EGP 00. He received EGP 00, while the remaining EGP 00 was not received.`
+The customer attempted to cash out EGP 00. He received EGP 00, while the remaining EGP 00 was not received.`,
   
   "ATM Cashin-Not found": `Wallet number:
 ID:
