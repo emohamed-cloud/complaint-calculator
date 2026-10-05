@@ -298,8 +298,15 @@ function showChargeback(c) {
 
     CB[c].split("\n").forEach(line => {
 
-      const e =
-        document.createElement("div");
+  const e =
+    document.createElement("div");
+
+  if (
+    c === "ATM Cashout-Posted" &&
+    line.includes("The customer attempted to cash out")
+  ) {
+    e.style.fontWeight = "700";
+  }
 
 
       if (/^https?:\/\//i.test(line)) {
