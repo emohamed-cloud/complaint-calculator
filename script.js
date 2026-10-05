@@ -300,7 +300,7 @@ if (CB[c]) {
 
 
     if (
-      c === "ATM Cashout issue-Posted"
+      c === "ATM Cashout issue-Posted" &&
       line.trim().startsWith(
         "The customer attempted to cash out"
       )
