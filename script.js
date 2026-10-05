@@ -148,7 +148,6 @@ Date and time:`,
 
   "ATM Cashin-Not found": `Wallet number:
 ID:
-Bank name:
 Amount:
 Date and time:`,
 
