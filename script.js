@@ -191,7 +191,14 @@ const chargebackText = document.getElementById("chargebackText");
 const chargebackEmpty = document.getElementById("chargebackEmpty");
 
 let selected = "";
+const internalComment =
+  document.getElementById("internalComment");
 
+const internalCommentText =
+  document.getElementById("internalCommentText");
+
+const copyInternalComment =
+  document.getElementById("copyInternalComment");
 
 const pad = n => String(n).padStart(2, "0");
 
@@ -673,7 +680,39 @@ function calculate() {
       : today > due
         ? "SLA Exceeded"
         : "Within SLA";
+/* INTERNAL COMMENT */
 
+let comment = "";
+
+const slaType =
+  cfg[1] === "business"
+    ? "Business Days"
+    : "Calendar Days";
+
+if (today < complaintDate) {
+
+  comment =
+    `Customer asked about escalation. I informed the customer that the complaint date is in the future. The complaint was submitted on ${fmt(complaintDate)}, and the SLA will expire on ${fmt(due)}.`;
+
+}
+
+else if (today > due) {
+
+  comment =
+    `Customer asked about escalation. I informed the customer that the complaint has exceeded the ${cfg[0]} ${slaType} SLA. The complaint was submitted on ${fmt(complaintDate)}, and the SLA expired on ${fmt(due)}.`;
+
+}
+
+else {
+
+  comment =
+    `Customer asked about escalation. I informed the customer that the complaint is currently on day ${currentDay} of ${cfg[0]} ${slaType} SLA. The complaint was submitted on ${fmt(complaintDate)}, and the SLA will expire on ${fmt(due)}.`;
+
+}
+
+internalCommentText.textContent = comment;
+
+internalComment.classList.remove("hidden");
 
   /* HOLIDAYS */
 
@@ -806,3 +845,49 @@ document
 
     }
   );
+
+
+/* COPY INTERNAL COMMENT */
+
+copyInternalComment.addEventListener(
+  "click",
+  async () => {
+
+    const text =
+      internalCommentText.textContent;
+
+    if (!text) {
+      return;
+    }
+
+    try {
+
+      await navigator
+        .clipboard
+        .writeText(text);
+
+    }
+
+    catch (error) {
+
+      const textarea =
+        document.createElement("textarea");
+
+      textarea.value = text;
+
+      document.body.appendChild(
+        textarea
+      );
+
+      textarea.select();
+
+      document.execCommand(
+        "copy"
+      );
+
+      textarea.remove();
+
+    }
+
+  }
+);
