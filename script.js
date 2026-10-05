@@ -35,7 +35,7 @@ const S = {
 
   "P2M-posted": [25, "business"],
 
-  "P2M within 2D": [2, "calendar"],
+  "P2M Within 2D": [2, "calendar"],
 
   "Transaction Escalation*Exceeded 45D or not*": [45, "calendar"],
 
